@@ -1,8 +1,20 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
-import { Task, SyncQueueItem } from '../types';
 
 const sqlite = sqlite3.verbose();
+
+
+export interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  completed: number;
+  created_at?: string;
+  updated_at?: string;
+  is_deleted?: number;
+  sync_status?: string;
+  server_id?: string;
+  last_synced_at?: string;
+}
 
 export class Database {
   private db: sqlite3.Database;
@@ -44,8 +56,25 @@ export class Database {
       )
     `;
 
+// Server-side storage to simulate a real backend for batch processing
+    // Keeps mapping from client_id -> server task along with last-write-wins timestamps
+    const createServerTasksTable = `
+      CREATE TABLE IF NOT EXISTS server_tasks (
+        id TEXT PRIMARY KEY,                 -- server-assigned id (srv_*)
+        client_id TEXT UNIQUE,               -- client/local id
+        title TEXT NOT NULL,
+        description TEXT,
+        completed INTEGER DEFAULT 0,
+        is_deleted INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+
     await this.run(createTasksTable);
     await this.run(createSyncQueueTable);
+    await this.run(createServerTasksTable);   
   }
 
   // Helper methods
@@ -58,23 +87,27 @@ export class Database {
     });
   }
 
-  get(sql: string, params: any[] = []): Promise<any> {
+  get<T = unknown>(
+    sql: string,
+    params: unknown[] = [],
+  ): Promise<T | undefined> {
     return new Promise((resolve, reject) => {
-      this.db.get(sql, params, (err, row) => {
-        if (err) reject(err);
+      this.db.get(sql, params, (err: unknown, row?: T) => {
+        if (err) reject(err as Error);
         else resolve(row);
       });
     });
   }
 
-  all(sql: string, params: any[] = []): Promise<any[]> {
+  all<T = unknown>(sql: string, params: unknown[] = []): Promise<T[]> {
     return new Promise((resolve, reject) => {
-      this.db.all(sql, params, (err, rows) => {
-        if (err) reject(err);
+      this.db.all(sql, params, (err: unknown, rows: T[]) => {
+        if (err) reject(err as Error);
         else resolve(rows);
       });
     });
   }
+
 
   close(): Promise<void> {
     return new Promise((resolve, reject) => {
