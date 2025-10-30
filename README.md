@@ -166,6 +166,17 @@ npm run test:coverage
 # Run tests with UI
 npm run test:ui
 ```
+Full API Endpoints (with Render URL)
+#	Method	Full Endpoint	Description
+1	GET	https://backend-interview-challenge-j9zb.onrender.com/api/tasks	Get all tasks
+2	GET	https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Get task by ID
+3	POST	https://backend-interview-challenge-j9zb.onrender.com/api/tasks	Create a new task
+4	PUT	https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Update existing task
+5	DELETE	https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Delete task by ID
+6	POST	https://backend-interview-challenge-j9zb.onrender.com/api/sync	Manually trigger sync
+7	GET	https://backend-interview-challenge-j9zb.onrender.com/api/status	Get sync queue status
+8	POST	https://backend-interview-challenge-j9zb.onrender.com/api/batch	Sync multiple items (batch)
+9	GET	https://backend-interview-challenge-j9zb.onrender.com/api/health	API health check
 
 ### Test Coverage
 - **TaskService Tests**: CRUD operations, sync queue management
