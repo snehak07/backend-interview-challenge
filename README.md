@@ -1,4 +1,20 @@
-# Backend Interview Challenge - Task Sync API
+
+1.Your Github Repo Link: 
+https://github.com/snehak07/backend-interview-challenge/pull/1
+
+2.Screencast explanation:
+https://drive.google.com/file/d/1kRglobWT2akCv60m_c49M0AX73PO7RAD/view?usp=sharing
+
+3.Cloud-deployed version of the API endpoint:
+   	GET	  https://backend-interview-challenge-j9zb.onrender.com/api/tasks	Get all tasks
+   	GET    https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Get task by ID
+   	POST  https://backend-interview-challenge-j9zb.onrender.com/api/tasks	Create a new task
+   	PUT	   https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Update existing task
+   	DELETE	https://backend-interview-challenge-j9zb.onrender.com/api/tasks/:id	Delete task by ID
+   	POST  https://backend-interview-challenge-j9zb.onrender.com/api/sync	Manually trigger sync
+   	GET	  https://backend-interview-challenge-j9zb.onrender.com/api/status	Get sync queue status
+  	POST https://backend-interview-challenge-j9zb.onrender.com/api/batch	Sync multiple items (batch)
+  	GET	 https://backend-interview-challenge-j9zb.onrender.com/api/health	API health check# Backend Interview Challenge - Task Sync API
 
 ## Overview
 
